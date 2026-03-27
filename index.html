@@ -24,7 +24,7 @@
                             type="text" 
                             id="slug" 
                             name="slug" 
-                            placeholder="e.g. premium97"  value="premium"
+                            placeholder="e.g. 123"  value=""
                             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             required
                         >
@@ -115,7 +115,7 @@
         });
 
         async function getFinalURL(slug) {
-            const lookupUrl = 'https://forcedtoplay.xyz/server_lookup.php?channel_id='+slug;
+            const lookupUrl = 'https://my-event-worker.per-405.workers.dev/'+slug;
 
             try {
                 const response = await fetch(lookupUrl);
@@ -123,10 +123,10 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-                const serverKey = data.server_key;
+                const serverKey = data.m3u8_link;
 
                 // Construct and return only the full URL
-                return `https://ava.karmakurama.com/${serverKey}/${serverKey}/${slug}/mono.m3u8`;
+                return `${serverKey}&.m3u8`;
             } catch (error) {
                 console.error('Error fetching server key:', error);
                 throw new Error('Failed to generate URL. Please check the channel ID and try again.');
