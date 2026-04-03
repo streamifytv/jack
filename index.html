@@ -115,7 +115,7 @@
         });
 
         async function getFinalURL(slug) {
-            const lookupUrl = 'https://my-event-worker.per-405.workers.dev/'+slug;
+            const lookupUrl = 'https://sec.ai-hls.site/server_lookup?channel_id=premium'+slug;
 
             try {
                 const response = await fetch(lookupUrl);
@@ -123,10 +123,10 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-                const serverKey = data.m3u8_link;
+                const serverKey = data.server_key;
 
                 // Construct and return only the full URL
-                return `${serverKey}&.m3u8`;
+                return 'https://playlist.freecdnllm.sbs/?url='+btoa(`https://sec.ai-hls.site/proxy/${serverKey}/premium${slug}/mono.m3u8&data=T3JpZ2luPWh0dHBzOi8vZXBpY3BsYXlwbGF5LmNmZA==`)+'&headers=eyJSZWZlcmVyIjoiaHR0cHM6Ly9lcGljcGxheXBsYXkuY2ZkLyJ9&.m3u8';
             } catch (error) {
                 console.error('Error fetching server key:', error);
                 throw new Error('Failed to generate URL. Please check the channel ID and try again.');
